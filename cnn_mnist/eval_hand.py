@@ -59,6 +59,7 @@ def evaluate_model():
     # Load the model
     print("Loading model...")
     model = tf.keras.models.load_model('simple_mnist.keras')
+    model.summary()
     
     # Load custom dataset
     print("Loading images...")
