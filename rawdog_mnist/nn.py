@@ -13,10 +13,10 @@ import tensorflow as tf
 train_images = train_images.reshape(60000, 784).T.astype('float32') / 255
 
 def init_parameters():
-    W1 = np.random.randn(32, 784)
-    b1 = np.zeros((32, 1))
+    W1 = np.random.randn(128, 784)
+    b1 = np.zeros((128, 1))
 
-    W2 = np.random.randn(10, 32)
+    W2 = np.random.randn(10, 128)
     b2 = np.zeros((10, 1))
 
     return W1, b1, W2, b2
@@ -98,3 +98,14 @@ def gradient_descent(X, Y, itr, alpha):
 print(train_images[:, :1000].shape)
 
 W1, b1, W2, b2 = gradient_descent(train_images[:, :2000], init_y(train_labels[:2000]), 2000, 0.35)
+
+test_images = test_images.reshape(10000, 784).T.astype('float32') / 255
+
+test_y = init_y(test_labels)
+
+_, _, _, L2_test = forward_propagation(W1, b1, W2, b2, test_images)
+
+test_predictions = get_predictions(L2_test)
+test_accuracy = get_accuracy(test_predictions, np.argmax(test_y, 0))
+
+print("Test Accuracy: ", test_accuracy)
