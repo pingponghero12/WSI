@@ -1,7 +1,7 @@
 # Neural Network Basics Report
 
 ## Exercise 1
-I implemented 4 different types of neural networks for the MNIST dataset: CNN, standard linear, SimpleNet, and a personal implementation.
+I implemented 4 different types of neural networks for the MNIST dataset: CNN, standard linear, SimpleNet, and a personal implementation in numpy.
 
 ### CNN
 ![CNN Confusion Matrix](images/CNN_confusionMatrixSpr1.png)
@@ -40,7 +40,7 @@ The performance on my custom dataset is significantly worse than on the standard
 
 1. **Different capture conditions**: Lighting, resolution, and background noise in my dataset differ from the controlled MNIST collection environment.
 
-SimpleNet performs better on my dataset (80% vs 53.3%), likely due to its simpler architecture being less prone to overfitting on specific MNIST characteristics.
+SimpleNet performs better on my dataset (80% vs 53.3%), likely due to its significally bigger size(x2) and probably because it is just a better model.
 
 ## Exercise 3
 Random Forest performance with different parameters (num_trees, max_depth):
@@ -50,4 +50,4 @@ Random Forest performance with different parameters (num_trees, max_depth):
 - 64 trees, depth 8: Test accuracy: 0.9133
 - 512 trees, depth 64: Test accuracy: 0.9697
 
-The results show that increasing the number of trees generally improves accuracy, but with diminishing returns after reaching around 256 trees. Extremely shallow trees (depth 8) significantly reduce performance, while very deep trees (depth 64) offer only marginal improvement over moderate depths.
+The results show that increasing the number of trees generally improves accuracy, but with diminishing returns after reaching around 128 trees. Extremely shallow trees (depth 8) significantly reduce performance, while very deep trees (depth 64) offer only marginal improvement over moderate depths.
