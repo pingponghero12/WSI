@@ -47,7 +47,7 @@ def load_images_from_folder(folder):
 
 def evaluate_model():
     # Check if model exists
-    if not os.path.exists('simple_mnist.keras'):
+    if not os.path.exists('simplenet_mnist.keras'):
         print("Model not found. Please train the model first.")
         return
         
@@ -58,7 +58,7 @@ def evaluate_model():
         
     # Load the model
     print("Loading model...")
-    model = tf.keras.models.load_model('simple_mnist.keras')
+    model = tf.keras.models.load_model('simplenet_mnist.keras')
     model.summary()
     
     # Load custom dataset

@@ -22,8 +22,8 @@ test_df['label'] = tl.astype(int)
 model = ydf.RandomForestLearner(
     label="label",
     task=ydf.Task.CLASSIFICATION,
-    num_trees=100,
-    max_depth=20,
+    num_trees=512,
+    max_depth=32,
     winner_take_all=False
 ).train(train_df)
 
