@@ -2,41 +2,49 @@
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/heur_linearconflicts.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/heur_linearconflicts.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_linearconflicts.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_linearconflicts.cpp",
+  "output": "CMakeFiles/solver.dir/src/heur_linearconflicts.cpp.o"
 },
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/heur_manhattan.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/heur_manhattan.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_manhattan.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_manhattan.cpp",
+  "output": "CMakeFiles/solver.dir/src/heur_manhattan.cpp.o"
 },
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/heur_misplaced.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/heur_misplaced.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_misplaced.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_misplaced.cpp",
+  "output": "CMakeFiles/solver.dir/src/heur_misplaced.cpp.o"
 },
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/heur_pdb.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/heur_pdb.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_pdb.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/heur_pdb.cpp",
+  "output": "CMakeFiles/solver.dir/src/heur_pdb.cpp.o"
 },
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/main.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/main.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/main.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/main.cpp",
+  "output": "CMakeFiles/solver.dir/src/main.cpp.o"
 },
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/pdb_loader.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/pdb_loader.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/pdb_loader.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/pdb_loader.cpp",
+  "output": "CMakeFiles/solver.dir/src/pdb_loader.cpp.o"
 },
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/solver.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/solver.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/solver.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/solver.cpp",
+  "output": "CMakeFiles/solver.dir/src/solver.cpp.o"
 },
 {
   "directory": "/home/prlpnrpph512/Documents/WSI/list2/build",
   "command": "g++  -I/home/prlpnrpph512/Documents/WSI/list2/include -Wall -Wextra -Wpedantic -O3 -std=gnu++23 -o CMakeFiles/solver.dir/src/utils.cpp.o -c /home/prlpnrpph512/Documents/WSI/list2/src/utils.cpp",
-  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/utils.cpp"
+  "file": "/home/prlpnrpph512/Documents/WSI/list2/src/utils.cpp",
+  "output": "CMakeFiles/solver.dir/src/utils.cpp.o"
 }
 ]

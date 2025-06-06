@@ -80,7 +80,11 @@ std::vector<int> generate_initial_state(int grid_size, const std::vector<int>& g
         for (int i = 0; i < num_tiles - 1; ++i) board[i] = tiles[i];
         board[num_tiles - 1] = 0;
     } while (!is_solvable(board, grid_size, goal_state));
-    return board;
+
+    //std::vector<int> out = {7,5,8,12,1,6,9,14,10,0,2,4,3,11,13,15};
+    //std::vector<int> out = {12,10,14,11,9,8,6,2,0,7,15,13,4,1,5,3};
+    std::vector<int> out = {4,12,15,5,14,10,11,13,0,7,2,8,6,9,1,3};
+    return out;
 }
 
 std::vector<std::vector<int>> get_neighbors(const std::vector<int>& current_board, int empty_idx, int grid_size) {
