@@ -72,9 +72,11 @@ int heuristic_pdb_plus_manhattan_remaining(
 ) {
     auto key = get_pattern_positions(board, pdb_pattern_tiles, grid_size);
     auto it = pdb.find(key);
+
     int pdb_cost = (it != pdb.end()) ? it->second : 0;
     int N = grid_size * grid_size;
     int manhattan = 0;
+
     for (int i = 0; i < N; ++i) {
         int v = board[i];
         if (v == 0) continue;
@@ -83,5 +85,6 @@ int heuristic_pdb_plus_manhattan_remaining(
         manhattan += abs((i / grid_size) - (goal_idx / grid_size))
                    + abs((i % grid_size) - (goal_idx % grid_size));
     }
+
     return pdb_cost + manhattan;
 }

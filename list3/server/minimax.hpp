@@ -38,7 +38,7 @@ public:
     
     int get_best_move(int board[5][5]) {
         nodes = 0;
-        int best_move = -1;
+        int best_move = -1; // error if return -1
         int best_score = INT_MIN;
         
         std::vector<int> moves = gen_moves(board);
@@ -205,7 +205,7 @@ private:
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board[i][j] == player) {
-                    // Check all 8 directions for adjacent pieces
+                    // Check all 8 around
                     int directions[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
                     
                     for (int d = 0; d < 8; d++) {

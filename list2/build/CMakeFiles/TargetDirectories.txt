@@ -1,0 +1,3 @@
+/home/prlpnrpph512/Documents/WSI/list2/build/CMakeFiles/solver.dir
+/home/prlpnrpph512/Documents/WSI/list2/build/CMakeFiles/edit_cache.dir
+/home/prlpnrpph512/Documents/WSI/list2/build/CMakeFiles/rebuild_cache.dir
