@@ -7,6 +7,7 @@ from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 import pandas as pd
 from collections import Counter
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
 # Import cpp module
@@ -98,6 +99,10 @@ class EMNISTClusteringAnalysis:
         plt.xlabel('Clusters')
         plt.ylabel('Digits')
         plt.tight_layout()
+        
+        # Save the figure
+        filename = f"img/kmeans_{n_clusters}_assignment_matrix.png"
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
         plt.show()
         
     def plot_centroids(self, kmeans, n_clusters, title_suffix=""):
@@ -132,6 +137,10 @@ class EMNISTClusteringAnalysis:
             
         plt.suptitle(f'Cluster Centroids{title_suffix}\n({n_clusters} clusters)', fontsize=16)
         plt.tight_layout()
+        
+        # Save the figure
+        filename = f"img/kmeans_{n_clusters}_centroids.png"
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
         plt.show()
         
     def analyze_cluster_purity(self, labels, n_clusters):
@@ -201,10 +210,6 @@ def main():
     
     analyzer = EMNISTClusteringAnalysis()
     analyzer.run_complete_analysis()
-    
-    print(f"\nAnalysis completed!")
-    print("All visualizations have been displayed.")
-    print("Check the console output for detailed cluster analysis and suggestions.")
 
 if __name__ == "__main__":
     main()

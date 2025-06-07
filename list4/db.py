@@ -6,8 +6,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 from collections import Counter, defaultdict
+import os
 
 import cl_module
+
 
 class DBSCANMNISTAnalyzer:
     def __init__(self, n_samples=12000, pca_components=20):
@@ -253,12 +255,14 @@ class DBSCANMNISTAnalyzer:
         for cl in sorted(set(self.labels)):
             if cl == -1:
                 title = f"Noise examples (total: {(self.labels == -1).sum()})"
+                filename = f"img/dbscan_noise_examples.png"
             else:
                 stats = cluster_stats[cl]
                 dominant = stats['dominant_digit']
                 purity = stats['purity']
                 size = stats['size']
                 title = f"Cluster {cl}: size={size}, dominant={dominant} ({purity:.2%})"
+                filename = f"img/dbscan_cluster_{cl}_dominant_{dominant}.png"
             
             indices = np.where(self.labels == cl)[0]
             
@@ -281,11 +285,16 @@ class DBSCANMNISTAnalyzer:
                 
             plt.suptitle(title)
             plt.tight_layout()
+            
+            # Save the figure
+            plt.savefig(filename, dpi=300, bbox_inches='tight')
             plt.show()
 
 def main():
     analyzer = DBSCANMNISTAnalyzer(n_samples=12000)
     analyzer.load_data()
+    
+    # analyzer.run(eps=6.0, min_samples=10)
     
     eps_values = [5.0, 6.0, 7.0, 8.0]
     min_samples_values = [3, 5, 10, 15]
