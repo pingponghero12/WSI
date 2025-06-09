@@ -5,6 +5,27 @@
 #include <algorithm>
 #include <random>
 
+// Win/Loss evaluation values
+#define WIN_SCORE 100000
+#define LOSS_SCORE -100000
+
+// Threat evaluation values
+#define THREE_IN_ROW_SCORE 10000
+#define OPP_THREE_IN_ROW_SCORE -15000
+#define TWO_IN_ROW_SCORE 1000
+#define OPP_TWO_IN_ROW_SCORE -1500
+
+// Pattern recognition values
+#define LONG_SPACING_BONUS 8000  // X _ _ X pattern
+#define SHORT_SPACING_BONUS 3000 // X _ X pattern
+#define CLUSTERING_PENALTY -2000 // Adjacent piece penalty
+
+// Position evaluation values
+#define CORNER_BONUS 5000      // Positions 11, 15, 51, 55
+#define NEAR_CENTER_BONUS 3000 // Positions 22, 24, 42, 44
+#define SECONDARY_BONUS 1500   // Positions 23, 32, 34, 43
+#define EDGE_BONUS 800         // Any edge position
+
 /*
  * HEURISTIC EVALUATION FUNCTION - MODIFIED VERSION
  * =====================================
@@ -156,7 +177,7 @@ private:
         return false;
     }
     
-    // COMPLETELY REWRITTEN: Check if move would create a losing 3-in-a-row
+    // Check if a move would create a 3-in-a-row with no possibility to extend
     bool would_create_losing_three(int board[5][5], int row, int col) {
         // Assume our piece is already at (row, col)
         
@@ -307,14 +328,14 @@ private:
             int x1 = i + 3*dx, y1 = j + 3*dy;
             if (x1 >= 0 && x1 < 5 && y1 >= 0 && y1 < 5 && board[x1][y1] == p) {
                 if (board[i + dx][j + dy] == 0 && board[i + 2*dx][j + 2*dy] == 0) {
-                    bonus += 8000; 
+                    bonus += LONG_SPACING_BONUS;
                 }
             }
             
             int x2 = i - 3*dx, y2 = j - 3*dy;
             if (x2 >= 0 && x2 < 5 && y2 >= 0 && y2 < 5 && board[x2][y2] == p) {
                 if (board[i - dx][j - dy] == 0 && board[i - 2*dx][j - 2*dy] == 0) {
-                    bonus += 8000; 
+                    bonus += LONG_SPACING_BONUS;
                 }
             }
             
@@ -322,14 +343,14 @@ private:
             int x3 = i + 2*dx, y3 = j + 2*dy;
             if (x3 >= 0 && x3 < 5 && y3 >= 0 && y3 < 5 && board[x3][y3] == p) {
                 if (board[i + dx][j + dy] == 0) {
-                    bonus += 3000;  // Bonus for X _ X pattern
+                    bonus += SHORT_SPACING_BONUS;
                 }
             }
             
             int x4 = i - 2*dx, y4 = j - 2*dy;
             if (x4 >= 0 && x4 < 5 && y4 >= 0 && y4 < 5 && board[x4][y4] == p) {
                 if (board[i - dx][j - dy] == 0) {
-                    bonus += 3000;  // Bonus for X _ X pattern
+                    bonus += SHORT_SPACING_BONUS;
                 }
             }
         }
@@ -337,7 +358,7 @@ private:
         return bonus;
     }
     
-    // Calculate adjacency penalty for clustering (REDUCED PENALTY)
+    // Calculate adjacency penalty for clustering
     int getAdjacentPenalty(int board[5][5], int i, int j, int p) {
         int penalty = 0;
         int adjacent[8][2] = {{-1,-1},{-1,0},{-1,1},{0,-1},{0,1},{1,-1},{1,0},{1,1}};
@@ -347,34 +368,38 @@ private:
             int nj = j + adjacent[a][1];
             
             if (ni >= 0 && ni < 5 && nj >= 0 && nj < 5 && board[ni][nj] == p) {
-                penalty -= 2000;  // Reduced from -5000 to -2000
+                penalty += CLUSTERING_PENALTY;
             }
         }
         
         return penalty;
     }
     
-    // Calculate position-based bonuses (NO CENTER PENALTY)
+    // Calculate position-based bonuses
     int getPositionBonus(int board[5][5], int i, int j, int p) {
         int move = (i + 1) * 10 + (j + 1);
         int bonus = 0;
         
         // Prioritize corners
-        if (move == 11 || move == 15 || move == 51 || move == 55) bonus += 5000;
+        if (move == 11 || move == 15 || move == 51 || move == 55) 
+            bonus += CORNER_BONUS;
         
         // Favor tiles near center
-        else if (move == 22 || move == 24 || move == 42 || move == 44) bonus += 3000;
+        else if (move == 22 || move == 24 || move == 42 || move == 44) 
+            bonus += NEAR_CENTER_BONUS;
         
         // Secondary good positions
-        else if (move == 23 || move == 32 || move == 34 || move == 43) bonus += 1500;
+        else if (move == 23 || move == 32 || move == 34 || move == 43) 
+            bonus += SECONDARY_BONUS;
         
         // Edge positions
-        else if (i == 0 || i == 4 || j == 0 || j == 4) bonus += 800;
+        else if (i == 0 || i == 4 || j == 0 || j == 4) 
+            bonus += EDGE_BONUS;
         
         // Add spacing bonus patterns
         bonus += getSpacingBonus(board, i, j, p);
         
-        // Subtract clustering penalty (reduced)
+        // Add clustering penalty
         bonus += getAdjacentPenalty(board, i, j, p);
         
         return bonus;
@@ -457,12 +482,12 @@ private:
                     else empty++;
                 }
                 
-                if (ai == 4) score += 100000;
-                if (op == 4) score -= 100000;
-                if (ai == 3 && op == 0) score += 10000; 
-                if (op == 3 && ai == 0) score -= 15000;
-                if (ai == 2 && op == 0) score += 1000;
-                if (op == 2 && ai == 0) score -= 1500;
+                if (ai == 4) score += WIN_SCORE;
+                if (op == 4) score += LOSS_SCORE;
+                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
+                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
+                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
         
@@ -476,12 +501,12 @@ private:
                     else empty++;
                 }
                 
-                if (ai == 4) score += 100000;
-                if (op == 4) score -= 100000;
-                if (ai == 3 && op == 0) score += 10000;
-                if (op == 3 && ai == 0) score -= 15000;
-                if (ai == 2 && op == 0) score += 1000;
-                if (op == 2 && ai == 0) score -= 1500;
+                if (ai == 4) score += WIN_SCORE;
+                if (op == 4) score += LOSS_SCORE;
+                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
+                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
+                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
         
@@ -495,12 +520,12 @@ private:
                     else empty++;
                 }
                 
-                if (ai == 4) score += 100000;
-                if (op == 4) score -= 100000;
-                if (ai == 3 && op == 0) score += 10000;
-                if (op == 3 && ai == 0) score -= 15000;
-                if (ai == 2 && op == 0) score += 1000;
-                if (op == 2 && ai == 0) score -= 1500;
+                if (ai == 4) score += WIN_SCORE;
+                if (op == 4) score += LOSS_SCORE;
+                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
+                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
+                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
         
@@ -514,12 +539,12 @@ private:
                     else empty++;
                 }
                 
-                if (ai == 4) score += 100000;
-                if (op == 4) score -= 100000;
-                if (ai == 3 && op == 0) score += 10000;
-                if (op == 3 && ai == 0) score -= 15000;
-                if (ai == 2 && op == 0) score += 1000;
-                if (op == 2 && ai == 0) score -= 1500;
+                if (ai == 4) score += WIN_SCORE;
+                if (op == 4) score += LOSS_SCORE;
+                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
+                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
+                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
 

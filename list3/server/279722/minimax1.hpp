@@ -1,5 +1,4 @@
 #pragma once
-#include "board.h"
 #include <climits>
 #include <vector>
 #include <algorithm>
@@ -18,7 +17,7 @@
 // Pattern recognition values
 #define LONG_SPACING_BONUS 8000  // X _ _ X pattern
 #define SHORT_SPACING_BONUS 3000 // X _ X pattern
-#define CLUSTERING_PENALTY -800 // Adjacent piece penalty
+#define CLUSTERING_PENALTY -2000 // Adjacent piece penalty
 
 // Position evaluation values
 #define CORNER_BONUS 5000      // Positions 11, 15, 51, 55
@@ -27,24 +26,24 @@
 #define EDGE_BONUS 800         // Any edge position
 
 /*
- * HEURISTIC EVALUATION FUNCTION - MODIFIED VERSION
+ * EVALUATION VALUES
  * =====================================
  *
- * 1. WINNING/THREAT DETECTION (Primary):
- *    - 4-in-a-row: ±100,000 (win/loss)
- *    - 3-in-a-row: +10,000/-15,000 (prioritizes blocking opponent threats)
+ * 1. ROW PATTERNS:
+ *    - 4-in-a-row: +-100,000 (win/loss)
+ *    - 3-in-a-row: +10,000/-15,000
  *    - 2-in-a-row: +1,000/-1,500
  *
- * 2. POSITION EVALUATION (Strategic):
- *    - Corners (11,15,51,55): +5,000 (maximum tactical flexibility)
+ * 2. BOARD POSITIONS:
+ *    - Corners (11,15,51,55): +5,000
  *    - Near-center (22,24,42,44): +3,000
  *    - Secondary positions: +1,500
  *    - Edge positions: +800
  *
- * 3. PATTERN RECOGNITION (Advanced):
- *    - X _ _ X spacing: +8,000 (creates multiple winning threats)
- *    - X _ X pattern: +3,000 (new pattern bonus)
- *    - Adjacent clustering: -2,000 per piece (reduced penalty)
+ * 3. SPECIAL PATTERNS:
+ *    - X _ _ X pattern: +8,000
+ *    - X _ X pattern: +3,000
+ *    - Adjacent pieces: -2,000 per piece
  */
 
 class Minimax {
@@ -53,14 +52,13 @@ private:
     int player;
     int opp;
     long long nodes;
-    std::mt19937 rng;  // Using mt19937 for randomness
+    std::mt19937 rng;
     
 public:
     Minimax(int depth, int p) : max_depth(depth), player(p) {
         opp = (p == 1) ? 2 : 1;
         nodes = 0;
         
-        // Initialize random number generator with time-based seed
         std::random_device rd;
         rng = std::mt19937(rd());
     }
@@ -68,7 +66,7 @@ public:
     int get_best_move(int board[5][5]) {
         nodes = 0;
         
-        // First, collect all valid moves
+        // Collect all valid moves
         std::vector<int> all_moves;
         std::vector<int> safe_moves;
         
@@ -98,7 +96,7 @@ public:
             int i = (move / 10) - 1;
             int j = (move % 10) - 1;
             
-            if (checkWinningMove(board, i, j, player)) {
+            if (check_winning_move(board, i, j, player)) {
                 return move;
             }
         }
@@ -108,7 +106,7 @@ public:
             int i = (move / 10) - 1;
             int j = (move % 10) - 1;
             
-            if (checkWinningMove(board, i, j, opp)) {
+            if (check_winning_move(board, i, j, opp)) {
                 return move;
             }
         }
@@ -141,7 +139,7 @@ public:
     
 private:
     // Check if placing a piece at (row, col) creates a winning line
-    bool checkWinningMove(int board[5][5], int row, int col, int p) {
+    bool check_winning_move(int board[5][5], int row, int col, int p) {
         board[row][col] = p; 
         
         int directions[4][2] = {{0,1}, {1,0}, {1,1}, {1,-1}};
@@ -316,7 +314,7 @@ private:
     }
     
     // Check for spacing patterns (X _ _ X and X _ X)
-    int getSpacingBonus(int board[5][5], int i, int j, int p) {
+    int get_spaceing_bonus(int board[5][5], int i, int j, int p) {
         int bonus = 0;
         int directions[4][2] = {{0,1}, {1,0}, {1,1}, {1,-1}}; 
         
@@ -359,7 +357,7 @@ private:
     }
     
     // Calculate adjacency penalty for clustering
-    int getAdjacentPenalty(int board[5][5], int i, int j, int p) {
+    int get_adjacent_penalty(int board[5][5], int i, int j, int p) {
         int penalty = 0;
         int adjacent[8][2] = {{-1,-1},{-1,0},{-1,1},{0,-1},{0,1},{1,-1},{1,0},{1,1}};
         
@@ -376,7 +374,7 @@ private:
     }
     
     // Calculate position-based bonuses
-    int getPositionBonus(int board[5][5], int i, int j, int p) {
+    int get_position_bonus(int board[5][5], int i, int j, int p) {
         int move = (i + 1) * 10 + (j + 1);
         int bonus = 0;
         
@@ -397,10 +395,10 @@ private:
             bonus += EDGE_BONUS;
         
         // Add spacing bonus patterns
-        bonus += getSpacingBonus(board, i, j, p);
+        bonus += get_spaceing_bonus(board, i, j, p);
         
         // Add clustering penalty
-        bonus += getAdjacentPenalty(board, i, j, p);
+        bonus += get_adjacent_penalty(board, i, j, p);
         
         return bonus;
     }
@@ -409,7 +407,7 @@ private:
         nodes++;
         
         // Check for terminal states (wins, losses, or depth limit)
-        if (depth == 0 || !isMovesLeft(board)) {
+        if (depth == 0 || !is_moves_left(board)) {
             return eval_pos(board);
         }
         
@@ -462,7 +460,7 @@ private:
         }
     }
     
-    bool isMovesLeft(int board[5][5]) {
+    bool is_moves_left(int board[5][5]) {
         for (int i = 0; i < 5; i++)
             for (int j = 0; j < 5; j++)
                 if (board[i][j] == 0) return true;
@@ -552,9 +550,9 @@ private:
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board[i][j] == player) {
-                    score += getPositionBonus(board, i, j, player);
+                    score += get_position_bonus(board, i, j, player);
                 } else if (board[i][j] == opp) {
-                    score -= getPositionBonus(board, i, j, opp) / 3;
+                    score -= get_position_bonus(board, i, j, opp) / 3;
                 }
             }
         }
