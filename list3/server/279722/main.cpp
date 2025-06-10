@@ -1,3 +1,5 @@
+// Based on Professors Maciej Gębala program
+
 #include <cstring>
 #include <string>
 #include <sys/socket.h>

@@ -15,7 +15,7 @@
 #define OPP_TWO_IN_ROW_SCORE -1500
 
 // Pattern recognition values
-#define LONG_SPACING_BONUS 8000  // X _ _ X pattern
+#define LONG_SPACING_BONUS 10000  // X _ _ X pattern
 #define SHORT_SPACING_BONUS 3000 // X _ X pattern
 #define CLUSTERING_PENALTY -2000 // Adjacent piece penalty
 
@@ -23,11 +23,10 @@
 #define CORNER_BONUS 5000      // Positions 11, 15, 51, 55
 #define NEAR_CENTER_BONUS 3000 // Positions 22, 24, 42, 44
 #define SECONDARY_BONUS 1500   // Positions 23, 32, 34, 43
-#define EDGE_BONUS 800         // Any edge position
+#define EDGE_BONUS 1000         // Any edge position
 
 /*
- * EVALUATION VALUES
- * =====================================
+ * Heurisic Function:
  *
  * 1. ROW PATTERNS:
  *    - 4-in-a-row: +-100,000 (win/loss)
@@ -560,7 +559,6 @@ private:
         return score;
     }
     
-    // Helper functions to maintain the same interface as the original class
     std::vector<int> gen_moves(int board[5][5]) {
         std::vector<int> moves;
         
