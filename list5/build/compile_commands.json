@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/pnrh1/Documents/WSI/list5/build",
+  "command": "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/nix/store/hrdlcxlpqhzv2iydcs04n2kdfl1wfsz6-gcc-wrapper-12.4.0/bin/g++ -Dcuda_neural_network_EXPORTS --options-file CMakeFiles/cuda_neural_network.dir/includes_CUDA.rsp -O3 -DNDEBUG -std=c++17 \"--generate-code=arch=compute_61,code=[compute_61,sm_61]\" -Xcompiler=-fPIC -Xcompiler=-fvisibility=hidden -arch=sm_61 --expt-relaxed-constexpr -x cu -rdc=true -c /home/pnrh1/Documents/WSI/list5/src/cuda/matrix_ops.cu -o CMakeFiles/cuda_neural_network.dir/src/cuda/matrix_ops.cu.o",
+  "file": "/home/pnrh1/Documents/WSI/list5/src/cuda/matrix_ops.cu",
+  "output": "CMakeFiles/cuda_neural_network.dir/src/cuda/matrix_ops.cu.o"
+},
+{
+  "directory": "/home/pnrh1/Documents/WSI/list5/build",
+  "command": "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/nix/store/hrdlcxlpqhzv2iydcs04n2kdfl1wfsz6-gcc-wrapper-12.4.0/bin/g++ -Dcuda_neural_network_EXPORTS --options-file CMakeFiles/cuda_neural_network.dir/includes_CUDA.rsp -O3 -DNDEBUG -std=c++17 \"--generate-code=arch=compute_61,code=[compute_61,sm_61]\" -Xcompiler=-fPIC -Xcompiler=-fvisibility=hidden -arch=sm_61 --expt-relaxed-constexpr -x cu -rdc=true -c /home/pnrh1/Documents/WSI/list5/src/cuda/activation_funcs.cu -o CMakeFiles/cuda_neural_network.dir/src/cuda/activation_funcs.cu.o",
+  "file": "/home/pnrh1/Documents/WSI/list5/src/cuda/activation_funcs.cu",
+  "output": "CMakeFiles/cuda_neural_network.dir/src/cuda/activation_funcs.cu.o"
+},
+{
+  "directory": "/home/pnrh1/Documents/WSI/list5/build",
+  "command": "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/nix/store/hrdlcxlpqhzv2iydcs04n2kdfl1wfsz6-gcc-wrapper-12.4.0/bin/g++ -Dcuda_neural_network_EXPORTS --options-file CMakeFiles/cuda_neural_network.dir/includes_CUDA.rsp -O3 -DNDEBUG -std=c++17 \"--generate-code=arch=compute_61,code=[compute_61,sm_61]\" -Xcompiler=-fPIC -Xcompiler=-fvisibility=hidden -arch=sm_61 --expt-relaxed-constexpr -x cu -rdc=true -c /home/pnrh1/Documents/WSI/list5/src/cuda/neural_network.cu -o CMakeFiles/cuda_neural_network.dir/src/cuda/neural_network.cu.o",
+  "file": "/home/pnrh1/Documents/WSI/list5/src/cuda/neural_network.cu",
+  "output": "CMakeFiles/cuda_neural_network.dir/src/cuda/neural_network.cu.o"
+},
+{
+  "directory": "/home/pnrh1/Documents/WSI/list5/build",
+  "command": "/nix/store/hrdlcxlpqhzv2iydcs04n2kdfl1wfsz6-gcc-wrapper-12.4.0/bin/g++ -Dcuda_neural_network_EXPORTS -I/home/pnrh1/Documents/WSI/list5/src/include -isystem /nix/store/c9m6yd8fg1flz2j5r4bif1ib5j20a0cy-python3-3.12.8/include/python3.12 -isystem /nix/store/clrlqkcvr4h67fbnv00pf29v02k4lhyr-python3.12-pybind11-2.13.6/include -isystem /nix/store/vnwm837kbwv0ckf1xbjs6zx9vddcjz8d-cuda_nvcc-12.4.99/include -O3 -DNDEBUG -std=gnu++17 -fPIC -fvisibility=hidden -flto -fno-fat-lto-objects -o CMakeFiles/cuda_neural_network.dir/src/cpp/neural_network.cpp.o -c /home/pnrh1/Documents/WSI/list5/src/cpp/neural_network.cpp",
+  "file": "/home/pnrh1/Documents/WSI/list5/src/cpp/neural_network.cpp",
+  "output": "CMakeFiles/cuda_neural_network.dir/src/cpp/neural_network.cpp.o"
+},
+{
+  "directory": "/home/pnrh1/Documents/WSI/list5/build",
+  "command": "/nix/store/hrdlcxlpqhzv2iydcs04n2kdfl1wfsz6-gcc-wrapper-12.4.0/bin/g++ -Dcuda_neural_network_EXPORTS -I/home/pnrh1/Documents/WSI/list5/src/include -isystem /nix/store/c9m6yd8fg1flz2j5r4bif1ib5j20a0cy-python3-3.12.8/include/python3.12 -isystem /nix/store/clrlqkcvr4h67fbnv00pf29v02k4lhyr-python3.12-pybind11-2.13.6/include -isystem /nix/store/vnwm837kbwv0ckf1xbjs6zx9vddcjz8d-cuda_nvcc-12.4.99/include -O3 -DNDEBUG -std=gnu++17 -fPIC -fvisibility=hidden -flto -fno-fat-lto-objects -o CMakeFiles/cuda_neural_network.dir/src/cpp/python_bindings.cpp.o -c /home/pnrh1/Documents/WSI/list5/src/cpp/python_bindings.cpp",
+  "file": "/home/pnrh1/Documents/WSI/list5/src/cpp/python_bindings.cpp",
+  "output": "CMakeFiles/cuda_neural_network.dir/src/cpp/python_bindings.cpp.o"
+}
+]

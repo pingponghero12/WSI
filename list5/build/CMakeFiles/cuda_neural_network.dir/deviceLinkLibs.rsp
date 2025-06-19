@@ -1,0 +1,1 @@
+  -L"/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/lib64/stubs"  -L"/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/lib64-L/nix/store/vnwm837kbwv0ckf1xbjs6zx9vddcjz8d-cuda_nvcc-12.4.99/nvvm/lib"   -ldl "/nix/store/3lilc98dgqx2gxcyaqsj5annchnkhjmk-cuda_cudart-12.4.99-static/lib/libculibos.a" -lcudadevrt -lcudart 
