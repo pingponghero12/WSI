@@ -5,50 +5,50 @@
 #include <random>
 
 // Win/Loss evaluation values
-#define WIN_SCORE 100000
-#define LOSS_SCORE -100000
+#define WIN_SCORE 1000
+#define LOSS_SCORE -1000
 
 // Threat evaluation values
-#define THREE_IN_ROW_SCORE 10000
-#define OPP_THREE_IN_ROW_SCORE -15000
-#define TWO_IN_ROW_SCORE 1000
-#define OPP_TWO_IN_ROW_SCORE -1500
+#define THREE_IN_ROW_SCORE 100
+#define OPP_THREE_IN_ROW_SCORE -150
+#define TWO_IN_ROW_SCORE 10
+#define OPP_TWO_IN_ROW_SCORE -15
 
 // Pattern recognition values
-#define LONG_SPACING_BONUS 10000  // X _ _ X pattern
-#define SHORT_SPACING_BONUS 3000 // X _ X pattern
-#define CLUSTERING_PENALTY -2000 // Adjacent piece penalty
+#define LONG_SPACING_BONUS 80  // X _ _ X pattern
+#define SHORT_SPACING_BONUS 40 // X _ X pattern
+#define CLUSTERING_PENALTY -30 // Adjacent piece penalty
 
 // Position evaluation values
-#define CORNER_BONUS 5000      // Positions 11, 15, 51, 55
-#define NEAR_CENTER_BONUS 3000 // Positions 22, 24, 42, 44
-#define SECONDARY_BONUS 1500   // Positions 23, 32, 34, 43
-#define EDGE_BONUS 1000         // Any edge position
+#define CORNER_BONUS 50      // Positions 11, 15, 51, 55
+#define NEAR_CENTER_BONUS 30 // Positions 22, 24, 42, 44
+#define SECONDARY_BONUS 15   // Positions 23, 32, 34, 43
+#define EDGE_BONUS 10         // Any edge position
 
 /*
  * Heurisic Function:
  *
  * 1. ROW PATTERNS:
- *    - 4-in-a-row: +-100,000 (win/loss)
- *    - 3-in-a-row: +10,000/-15,000
- *    - 2-in-a-row: +1,000/-1,500
+ *    - 4-in-a-row: +-1000
+ *    - 3-in-a-row: +100 -150
+ *    - 2-in-a-row: +10 -15
  *
  * 2. BOARD POSITIONS:
- *    - Corners (11,15,51,55): +5,000
- *    - Near-center (22,24,42,44): +3,000
- *    - Secondary positions: +1,500
- *    - Edge positions: +800
+ *    - Corners (11,15,51,55): +50
+ *    - Near-center (22,24,42,44): +30
+ *    - Secondary positions: +15
+ *    - Edge positions: +10
  *
  * 3. SPECIAL PATTERNS:
- *    - X _ _ X pattern: +8,000
- *    - X _ X pattern: +3,000
- *    - Adjacent pieces: -2,000 per piece
+ *    - X _ _ X pattern: +80
+ *    - X _ X pattern: +40
+ *    - Adjacent pieces: -30
  */
 
 class Minimax {
 private:
     int max_depth;
-    int player;
+    int player; 
     int opp;
     long long nodes;
     std::mt19937 rng;
@@ -65,7 +65,6 @@ public:
     int get_best_move(int board[5][5]) {
         nodes = 0;
         
-        // Collect all valid moves
         std::vector<int> all_moves;
         std::vector<int> safe_moves;
         
@@ -75,45 +74,64 @@ public:
                     int move = (i + 1) * 10 + (j + 1);
                     all_moves.push_back(move);
                     
-                    // Check if this move is safe (doesn't create a losing 3-in-a-row)
-                    board[i][j] = player;
-                    if (!would_create_losing_three(board, i, j)) {
+                    board[i][j] = player; // Temporarily make the move
+                    if (!would_create_losing_three(board, i, j)) { // Check for the AI player
                         safe_moves.push_back(move);
                     }
-                    board[i][j] = 0;
+                    board[i][j] = 0; // Undo the move
                 }
             }
         }
         
-        // If no safe moves, use any legal move
-        if (safe_moves.empty() && !all_moves.empty()) {
-            return all_moves[0];
+        if (safe_moves.empty()) {
+            if (!all_moves.empty()) return all_moves[0];
+            else return -1;
         }
-        
-        // FIRST PRIORITY: Check if we can win immediately (in one move)
+
+
+        //Check if we can win immediately (in one move)
         for (int move : safe_moves) {
             int i = (move / 10) - 1;
             int j = (move % 10) - 1;
             
-            if (check_winning_move(board, i, j, player)) {
-                return move;
-            }
-        }
-
-        // SECOND PRIORITY: Block opponent's winning moves (in one move)
-        for (int move : safe_moves) {
-            int i = (move / 10) - 1;
-            int j = (move % 10) - 1;
+            // Temporarily make the move to check for win
+            board[i][j] = player;
+            bool wins = has_four_in_a_row(board, i, j, player); // Check if this move creates a 4-in-a-row for us
+            board[i][j] = 0; // Undo
             
-            if (check_winning_move(board, i, j, opp)) {
+            if (wins) {
                 return move;
             }
         }
 
-        // THIRD PRIORITY: Use minimax with alpha-beta pruning (only on safe moves)
+        // Block opponent's winning moves (in one move)
+        for (int move : safe_moves) { // Iterate over our safe moves
+            int r = (move / 10) - 1;
+            int c = (move % 10) - 1;
+            
+            board[r][c] = opp; // Simulate opponent making a move at this empty spot
+            bool opp_wins = has_four_in_a_row(board, r, c, opp);
+            board[r][c] = 0; // Undo
+            
+            if (opp_wins) {
+                return move; 
+            }
+        }
+
+        // Use minimax with alpha-beta pruning (only on safe moves)
         int bestVal = INT_MIN;
         int best_move = -1;
         
+        // If there are safe moves, pick one using minimax
+        if (!safe_moves.empty()) {
+            best_move = safe_moves[0]; // Default to first safe move if minimax doesn't find better
+        } else if (!all_moves.empty()) {
+            best_move = all_moves[0]; // If no safe moves, default to first available move (likely losing)
+        } else {
+            return -1; // No moves available
+        }
+
+
         for (int move : safe_moves) {
             int i = (move / 10) - 1;
             int j = (move % 10) - 1;
@@ -128,27 +146,19 @@ public:
             }
         }
         
-        // If best_move is -1 but we have safe moves, pick the first safe move
-        if (best_move == -1 && !safe_moves.empty()) {
-            return safe_moves[0];
-        }
-        
         return best_move;
     }
     
 private:
-    // Check if placing a piece at (row, col) creates a winning line
-    bool check_winning_move(int board[5][5], int row, int col, int p) {
-        board[row][col] = p; 
-        
-        int directions[4][2] = {{0,1}, {1,0}, {1,1}, {1,-1}};
+    bool has_four_in_a_row(int board[5][5], int row, int col, int p) {
+        int directions[4][2] = {{1,0}, {0,1}, {1,1}, {1,-1}};
         
         for (int d = 0; d < 4; d++) {
             int dx = directions[d][0];
             int dy = directions[d][1];
-            int count = 1;         
-          
-            for (int i = 1; i < 4; i++) {
+            int count = 1; 
+            
+            for (int i = 1; i <= 3; i++) {
                 int nr = row + i * dx;
                 int nc = col + i * dy;
                 if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5 && board[nr][nc] == p) {
@@ -156,7 +166,7 @@ private:
                 } else break;
             }
             
-            for (int i = 1; i < 4; i++) {
+            for (int i = 1; i <= 3; i++) {
                 int nr = row - i * dx;
                 int nc = col - i * dy;
                 if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5 && board[nr][nc] == p) {
@@ -165,153 +175,60 @@ private:
             }
             
             if (count >= 4) {
-                board[row][col] = 0; 
                 return true;
             }
         }
-        
-        board[row][col] = 0; 
         return false;
     }
-    
-    // Check if a move would create a 3-in-a-row with no possibility to extend
+
     bool would_create_losing_three(int board[5][5], int row, int col) {
-        // Assume our piece is already at (row, col)
-        
-        // Check if this move creates a 4-in-a-row (which would override any 3-in-a-row loss)
         if (has_four_in_a_row(board, row, col, player)) {
-            return false; // Not a losing move if it creates a 4-in-a-row
+            return false; 
         }
         
-        // Check all 4 directions
         int directions[4][2] = {{1,0}, {0,1}, {1,1}, {1,-1}};
-        
         for (int d = 0; d < 4; d++) {
             int dx = directions[d][0];
             int dy = directions[d][1];
             
-            // Count consecutive pieces in both directions
-            int count = 1; // Start with 1 for the current piece
+            int count = 1;
             
-            // Count forward
-            for (int i = 1; i <= 2; i++) {
-                int nx = row + i * dx;
-                int ny = col + i * dy;
-                if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && board[nx][ny] == player) {
+            for (int i = 1; i < 5; i++) { // Check up to board boundaries
+                int nr = row + i * dx;
+                int nc = col + i * dy;
+                if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5 && board[nr][nc] == player) {
                     count++;
                 } else {
                     break;
                 }
             }
             
-            // Count backward
-            for (int i = 1; i <= 2; i++) {
-                int nx = row - i * dx;
-                int ny = col - i * dy;
-                if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && board[nx][ny] == player) {
+            for (int i = 1; i < 5; i++) {
+                int nr = row - i * dx;
+                int nc = col - i * dy;
+                if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5 && board[nr][nc] == player) {
                     count++;
                 } else {
                     break;
                 }
             }
             
-            // Check if we have exactly 3 in a row
+            // If the total line length is exactly 3
             if (count == 3) {
-                // Now check if this 3-in-a-row can be extended to a 4-in-a-row
-                bool can_extend = false;
-                
-                // Find the endpoints of the 3-in-a-row
-                int start_x = row, start_y = col;
-                int end_x = row, end_y = col;
-                
-                // Find the start point (backward)
-                for (int i = 1; i <= 2; i++) {
-                    int nx = row - i * dx;
-                    int ny = col - i * dy;
-                    if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && board[nx][ny] == player) {
-                        start_x = nx;
-                        start_y = ny;
-                    } else {
-                        break;
-                    }
-                }
-                
-                // Find the end point (forward)
-                for (int i = 1; i <= 2; i++) {
-                    int nx = row + i * dx;
-                    int ny = col + i * dy;
-                    if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && board[nx][ny] == player) {
-                        end_x = nx;
-                        end_y = ny;
-                    } else {
-                        break;
-                    }
-                }
-                
-                // Check position before the 3-in-a-row
-                int before_x = start_x - dx;
-                int before_y = start_y - dy;
-                if (before_x >= 0 && before_x < 5 && before_y >= 0 && before_y < 5 && board[before_x][before_y] == 0) {
-                    can_extend = true;
-                }
-                
-                // Check position after the 3-in-a-row
-                int after_x = end_x + dx;
-                int after_y = end_y + dy;
-                if (after_x >= 0 && after_x < 5 && after_y >= 0 && after_y < 5 && board[after_x][after_y] == 0) {
-                    can_extend = true;
-                }
-                
-                if (!can_extend) {
-                    return true; // This is a losing 3-in-a-row
-                }
-            }
-        }
-        
-        return false; // No losing 3-in-a-row found
-    }
-    
-    // Check if a position has a 4-in-a-row
-    bool has_four_in_a_row(int board[5][5], int row, int col, int p) {
-        int directions[4][2] = {{1,0}, {0,1}, {1,1}, {1,-1}};
-        
-        for (int d = 0; d < 4; d++) {
-            int dx = directions[d][0];
-            int dy = directions[d][1];
-            
-            // Count consecutive pieces in both directions
-            int count = 1; // Start with 1 for the current piece
-            
-            // Count forward
-            for (int i = 1; i <= 3; i++) {
-                int nx = row + i * dx;
-                int ny = col + i * dy;
-                if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && board[nx][ny] == p) {
-                    count++;
-                } else {
-                    break;
-                }
-            }
-            
-            // Count backward
-            for (int i = 1; i <= 3; i++) {
-                int nx = row - i * dx;
-                int ny = col - i * dy;
-                if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && board[nx][ny] == p) {
-                    count++;
-                } else {
-                    break;
-                }
-            }
-            
-            if (count >= 4) {
-                return true;
+                return true; 
             }
         }
         
         return false;
     }
     
+    bool check_winning_move(int current_board[5][5], int r, int c, int p_id) {
+        current_board[r][c] = p_id; 
+        bool is_win = has_four_in_a_row(current_board, r, c, p_id);
+        current_board[r][c] = 0; 
+        return is_win;
+    }
+
     // Check for spacing patterns (X _ _ X and X _ X)
     int get_spaceing_bonus(int board[5][5], int i, int j, int p) {
         int bonus = 0;
@@ -329,9 +246,10 @@ private:
                 }
             }
             
-            int x2 = i - 3*dx, y2 = j - 3*dy;
+            int x2 = i - 3*dx, y2 = j - 3*dy; // Check other direction for symmetry
             if (x2 >= 0 && x2 < 5 && y2 >= 0 && y2 < 5 && board[x2][y2] == p) {
-                if (board[i - dx][j - dy] == 0 && board[i - 2*dx][j - 2*dy] == 0) {
+                 if (i - dx >= 0 && i - dx < 5 && j - dy >= 0 && j - dy < 5 && board[i - dx][j - dy] == 0 &&
+                    i - 2*dx >= 0 && i - 2*dx < 5 && j - 2*dy >= 0 && j - 2*dy < 5 && board[i - 2*dx][j - 2*dy] == 0) {
                     bonus += LONG_SPACING_BONUS;
                 }
             }
@@ -344,9 +262,9 @@ private:
                 }
             }
             
-            int x4 = i - 2*dx, y4 = j - 2*dy;
-            if (x4 >= 0 && x4 < 5 && y4 >= 0 && y4 < 5 && board[x4][y4] == p) {
-                if (board[i - dx][j - dy] == 0) {
+            int x4 = i - 2*dx, y4 = j - 2*dy; // Check other direction
+             if (x4 >= 0 && x4 < 5 && y4 >= 0 && y4 < 5 && board[x4][y4] == p) {
+                if (i - dx >= 0 && i - dx < 5 && j - dy >= 0 && j - dy < 5 && board[i - dx][j - dy] == 0) {
                     bonus += SHORT_SPACING_BONUS;
                 }
             }
@@ -377,26 +295,16 @@ private:
         int move = (i + 1) * 10 + (j + 1);
         int bonus = 0;
         
-        // Prioritize corners
         if (move == 11 || move == 15 || move == 51 || move == 55) 
             bonus += CORNER_BONUS;
-        
-        // Favor tiles near center
         else if (move == 22 || move == 24 || move == 42 || move == 44) 
             bonus += NEAR_CENTER_BONUS;
-        
-        // Secondary good positions
         else if (move == 23 || move == 32 || move == 34 || move == 43) 
             bonus += SECONDARY_BONUS;
-        
-        // Edge positions
         else if (i == 0 || i == 4 || j == 0 || j == 4) 
             bonus += EDGE_BONUS;
         
-        // Add spacing bonus patterns
         bonus += get_spaceing_bonus(board, i, j, p);
-        
-        // Add clustering penalty
         bonus += get_adjacent_penalty(board, i, j, p);
         
         return bonus;
@@ -405,57 +313,72 @@ private:
     int minimax(int board[5][5], int depth, bool is_max, int alpha, int beta) {
         nodes++;
         
-        // Check for terminal states (wins, losses, or depth limit)
+        
+        int static_eval = eval_pos(board);
+        if (static_eval == WIN_SCORE || static_eval == LOSS_SCORE) {
+            return static_eval;
+        }
+
         if (depth == 0 || !is_moves_left(board)) {
-            return eval_pos(board);
+            return static_eval;
         }
         
-        int curr_player = is_max ? player : opp;
+        int current_eval_player = is_max ? player : opp;
         
         if (is_max) {
             int maxEval = INT_MIN;
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (board[i][j] == 0) {
-                        // Skip moves that create a losing 3-in-a-row
-                        board[i][j] = curr_player;
-                        if (would_create_losing_three(board, i, j)) {
-                            board[i][j] = 0;
-                            continue;
+            for (int r = 0; r < 5; r++) {
+                for (int c = 0; c < 5; c++) {
+                    if (board[r][c] == 0) {
+                        board[r][c] = current_eval_player;
+                        if (would_create_losing_three(board, r, c)) {
+                                board[r][c] = 0;
+                                maxEval = std::max(maxEval, LOSS_SCORE);
+                                alpha = std::max(alpha, LOSS_SCORE);
+
+                                maxEval = std::max(maxEval, LOSS_SCORE);
+                                alpha = std::max(alpha, LOSS_SCORE);
+                                if (beta <= alpha) {
+                                    board[r][c] = 0;
+                                    return maxEval; // Beta cutoff
+                                }
+                             board[r][c] = 0; // backtrack before continue
+                             continue; // Skip this losing move for the AI
                         }
-                        
+
                         int eval = minimax(board, depth - 1, false, alpha, beta);
-                        board[i][j] = 0;
+                        board[r][c] = 0;
                         
                         maxEval = std::max(maxEval, eval);
                         alpha = std::max(alpha, eval);
                         
                         if (beta <= alpha) {
-                            return maxEval; // Beta cutoff
+                            return maxEval; 
                         }
                     }
                 }
             }
-            return maxEval == INT_MIN ? 0 : maxEval; // Return 0 if no valid moves
-        } else {
+            return maxEval == INT_MIN ? (is_moves_left(board) ? 0 : static_eval) : maxEval;
+        } else { 
             int minEval = INT_MAX;
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (board[i][j] == 0) {
-                        board[i][j] = curr_player;
+            for (int r = 0; r < 5; r++) {
+                for (int c = 0; c < 5; c++) {
+                    if (board[r][c] == 0) {
+                        board[r][c] = current_eval_player;
+
                         int eval = minimax(board, depth - 1, true, alpha, beta);
-                        board[i][j] = 0;
+                        board[r][c] = 0; // Backtrack
                         
                         minEval = std::min(minEval, eval);
                         beta = std::min(beta, eval);
                         
                         if (beta <= alpha) {
-                            return minEval; // Alpha cutoff
+                            return minEval; 
                         }
                     }
                 }
             }
-            return minEval == INT_MAX ? 0 : minEval; // Return 0 if no valid moves
+            return minEval == INT_MAX ? (is_moves_left(board) ? 0 : static_eval) : minEval;
         }
     }
     
@@ -467,101 +390,120 @@ private:
     }
     
     int eval_pos(int board[5][5]) {
+        if (has_four_in_a_row_on_board(board, player)) return WIN_SCORE;
+        if (has_four_in_a_row_on_board(board, opp)) return LOSS_SCORE;
+
+        if (has_three_in_a_row_on_board_strict(board, player) && !has_four_in_a_row_on_board(board, player)) return LOSS_SCORE;
+        if (has_three_in_a_row_on_board_strict(board, opp) && !has_four_in_a_row_on_board(board, opp)) return WIN_SCORE; // Opponent lost
+
+
         int score = 0;
-        
-        // Check horizontal lines
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) { // Horizontal
             for (int j = 0; j <= 5 - 4; j++) {
-                int ai = 0, op = 0, empty = 0;
+                int ai = 0, op_count = 0;
                 for (int k = 0; k < 4; k++) {
                     if (board[i][j + k] == player) ai++;
-                    else if (board[i][j + k] == opp) op++;
-                    else empty++;
+                    else if (board[i][j + k] == opp) op_count++;
                 }
-                
-                if (ai == 4) score += WIN_SCORE;
-                if (op == 4) score += LOSS_SCORE;
-                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
-                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
-                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
-                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
+                if (ai == 3 && op_count == 0) score += THREE_IN_ROW_SCORE;
+                if (op_count == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op_count == 0) score += TWO_IN_ROW_SCORE;
+                if (op_count == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
-        
-        // Check vertical lines
-        for (int i = 0; i <= 5 - 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                int ai = 0, op = 0, empty = 0;
+        // Vertical
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i <= 5 - 4; i++) {
+                int ai = 0, op_count = 0;
                 for (int k = 0; k < 4; k++) {
                     if (board[i + k][j] == player) ai++;
-                    else if (board[i + k][j] == opp) op++;
-                    else empty++;
+                    else if (board[i + k][j] == opp) op_count++;
                 }
-                
-                if (ai == 4) score += WIN_SCORE;
-                if (op == 4) score += LOSS_SCORE;
-                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
-                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
-                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
-                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
+                if (ai == 3 && op_count == 0) score += THREE_IN_ROW_SCORE;
+                if (op_count == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op_count == 0) score += TWO_IN_ROW_SCORE;
+                if (op_count == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
-        
-        // Check diagonal lines (top-left to bottom-right)
+        // Diagonal (top-left to bottom-right)
         for (int i = 0; i <= 5 - 4; i++) {
             for (int j = 0; j <= 5 - 4; j++) {
-                int ai = 0, op = 0, empty = 0;
+                int ai = 0, op_count = 0;
                 for (int k = 0; k < 4; k++) {
                     if (board[i + k][j + k] == player) ai++;
-                    else if (board[i + k][j + k] == opp) op++;
-                    else empty++;
+                    else if (board[i + k][j + k] == opp) op_count++;
                 }
-                
-                if (ai == 4) score += WIN_SCORE;
-                if (op == 4) score += LOSS_SCORE;
-                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
-                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
-                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
-                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
+                if (ai == 3 && op_count == 0) score += THREE_IN_ROW_SCORE;
+                if (op_count == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op_count == 0) score += TWO_IN_ROW_SCORE;
+                if (op_count == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
-        
-        // Check diagonal lines (top-right to bottom-left)
+        // Diagonal (top-right to bottom-left)
         for (int i = 0; i <= 5 - 4; i++) {
-            for (int j = 3; j < 5; j++) {
-                int ai = 0, op = 0, empty = 0;
+            for (int j = 3; j < 5; j++) { // Start j from 3 (0-indexed) for a 4-length diagonal
+                int ai = 0, op_count = 0;
                 for (int k = 0; k < 4; k++) {
                     if (board[i + k][j - k] == player) ai++;
-                    else if (board[i + k][j - k] == opp) op++;
-                    else empty++;
+                    else if (board[i + k][j - k] == opp) op_count++;
                 }
-                
-                if (ai == 4) score += WIN_SCORE;
-                if (op == 4) score += LOSS_SCORE;
-                if (ai == 3 && op == 0) score += THREE_IN_ROW_SCORE;
-                if (op == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
-                if (ai == 2 && op == 0) score += TWO_IN_ROW_SCORE;
-                if (op == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
+                if (ai == 3 && op_count == 0) score += THREE_IN_ROW_SCORE;
+                if (op_count == 3 && ai == 0) score += OPP_THREE_IN_ROW_SCORE;
+                if (ai == 2 && op_count == 0) score += TWO_IN_ROW_SCORE;
+                if (op_count == 2 && ai == 0) score += OPP_TWO_IN_ROW_SCORE;
             }
         }
 
-        // Add position-based evaluation
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (board[i][j] == player) {
-                    score += get_position_bonus(board, i, j, player);
-                } else if (board[i][j] == opp) {
-                    score -= get_position_bonus(board, i, j, opp) / 3;
+        for (int r = 0; r < 5; r++) {
+            for (int c = 0; c < 5; c++) {
+                if (board[r][c] == player) {
+                    score += get_position_bonus(board, r, c, player);
+                } else if (board[r][c] == opp) {
+                    score -= get_position_bonus(board, r, c, opp) / 2;
                 }
             }
         }
-        
         return score;
+    }
+
+    bool has_four_in_a_row_on_board(int board[5][5], int p_id) {
+        for (int r = 0; r < 5; ++r) {
+            for (int c = 0; c < 5; ++c) {
+                if (board[r][c] == p_id) {
+                    if (has_four_in_a_row(board, r, c, p_id)) return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    bool has_three_in_a_row_on_board_strict(int board[5][5], int p_id) {
+        for (int r = 0; r < 5; ++r) {
+            for (int c = 0; c < 5; ++c) {
+                if (board[r][c] == p_id) { // Check lines starting/passing through this piece
+                    int directions[4][2] = {{1,0}, {0,1}, {1,1}, {1,-1}};
+                    for (int d = 0; d < 4; d++) {
+                        int dx = directions[d][0];
+                        int dy = directions[d][1];
+                        int count = 1;
+                        for (int k = 1; k < 5; k++) {
+                            int nr = r + k * dx; int nc = c + k * dy;
+                            if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5 && board[nr][nc] == p_id) count++; else break;
+                        }
+                        for (int k = 1; k < 5; k++) {
+                            int nr = r - k * dx; int nc = c - k * dy;
+                            if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5 && board[nr][nc] == p_id) count++; else break;
+                        }
+                        if (count == 3) return true; // Found a line of exactly 3
+                    }
+                }
+            }
+        }
+        return false;
     }
     
     std::vector<int> gen_moves(int board[5][5]) {
         std::vector<int> moves;
-        
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board[i][j] == 0) {
@@ -569,20 +511,15 @@ private:
                 }
             }
         }
-        
         return moves;
     }
     
     void make_move(int board[5][5], int move, int p) {
-        int row = (move / 10) - 1;
-        int col = (move % 10) - 1;
-        board[row][col] = p;
+        board[(move / 10) - 1][(move % 10) - 1] = p;
     }
     
     void undo_move(int board[5][5], int move) {
-        int row = (move / 10) - 1;
-        int col = (move % 10) - 1;
-        board[row][col] = 0;
+        board[(move / 10) - 1][(move % 10) - 1] = 0;
     }
     
     long long get_nodes() const { return nodes; }
