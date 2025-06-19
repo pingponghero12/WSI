@@ -1,20 +1,25 @@
 {
   "name": "CUDA Development Environment",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "image": "nvidia/cuda:12.2-devel-ubuntu22.04",
   "features": {
-    "ghcr.io/devcontainers/features/nvidia-cuda:1": {
-      "installCudnn": true,
-      "cudaVersion": "11.8",
-      "cudnnVersion": "8"
-    }
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
         "nvidia.nsight-vscode-edition"
       ]
     }
   },
-  "postCreateCommand": "nvcc --version && nvidia-smi"
+  "postCreateCommand": "apt-get update && apt-get install -y cmake build-essential && nvcc --version && nvidia-smi",
+  "remoteUser": "root",
+  "runArgs": ["--gpus", "all"]
 }
