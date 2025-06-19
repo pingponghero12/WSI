@@ -68,7 +68,6 @@ void CudaNeuralNetwork::allocateMemory() {
         throw std::runtime_error("CUDA memory allocation failed");
     }
     
-    std::cout << "Memory allocated successfully" << std::endl;
 }
 
 void CudaNeuralNetwork::initializeWeights() {
@@ -94,31 +93,89 @@ void CudaNeuralNetwork::initializeWeights() {
     cudaMemset(d_b1, 0, hidden_size * sizeof(float));
     cudaMemset(d_b2, 0, output_size * sizeof(float));
     
-    std::cout << "Weights initialized" << std::endl;
 }
 
-void CudaNeuralNetwork::forward(const std::vector<float>& X, std::vector<float>& predictions) {
-    // Copy input to device
-    cudaMemcpy(d_X, X.data(), X.size() * sizeof(float), cudaMemcpyHostToDevice);
+void CudaNeuralNetwork::forward_internal(const std::vector<float>& X, std::vector<float>& predictions) {
+    cudaError_t error = cudaMemcpy(d_X, X.data(), X.size() * sizeof(float), cudaMemcpyHostToDevice);
+    if (error != cudaSuccess) {
+        return;
+    }
     
     // Forward pass: L1u = W1 * X + b1
     cuda_matmul(d_W1, d_X, d_L1u, hidden_size, batch_size, input_size);
+    error = cudaGetLastError();
+    if (error != cudaSuccess) {
+        return;
+    }
+    
     cuda_add_bias(d_L1u, d_b1, hidden_size, batch_size);
+    error = cudaGetLastError();
+    if (error != cudaSuccess) {
+        return;
+    }
     
     // Forward pass: L1 = ReLU(L1u)
     cuda_relu(d_L1u, d_L1, hidden_size * batch_size);
+    error = cudaGetLastError();
+    if (error != cudaSuccess) {
+        return;
+    }
     
     // Forward pass: L2u = W2 * L1 + b2
     cuda_matmul(d_W2, d_L1, d_L2u, output_size, batch_size, hidden_size);
+    error = cudaGetLastError();
+    if (error != cudaSuccess) {
+        return;
+    }
+    
     cuda_add_bias(d_L2u, d_b2, output_size, batch_size);
+    error = cudaGetLastError();
+    if (error != cudaSuccess) {
+        return;
+    }
     
     // Forward pass: L2 = Softmax(L2u)
     cuda_softmax(d_L2u, d_L2, d_max_vals, d_exp_sums, output_size, batch_size);
+    error = cudaGetLastError();
+    if (error != cudaSuccess) {
+        std::cerr << "❌ Softmax failed: " << cudaGetErrorString(error) << std::endl;
+        return;
+    }
     
     // Copy results back to host
     predictions.resize(output_size * batch_size);
-    cudaMemcpy(predictions.data(), d_L2, predictions.size() * sizeof(float), cudaMemcpyDeviceToHost);
+    
+    error = cudaMemcpy(predictions.data(), d_L2, 
+                      predictions.size() * sizeof(float), 
+                      cudaMemcpyDeviceToHost);
+    
+    if (error != cudaSuccess) {
+        predictions.clear();
+        return;
+    }
+    
+    // Wait for completion
+    cudaDeviceSynchronize();
+    
+    // Check if we actually have data
+    if (predictions.size() > 0) {
+        for (int i = 0; i < std::min(5, (int)predictions.size()); i++) {
+        }
+    } else {
+    }
+    
 }
+
+// NEW: Public forward function that returns predictions
+std::vector<float> CudaNeuralNetwork::forward(const std::vector<float>& X) {
+    std::vector<float> predictions;
+    forward_internal(X, predictions);
+    
+    std::cout << "Public forward returning " << predictions.size() << " predictions" << std::endl;
+    
+    return predictions;  // This should work better with pybind11
+}
+
 
 void CudaNeuralNetwork::backward() {
     // Backward pass implementation
@@ -171,7 +228,7 @@ void CudaNeuralNetwork::update_weights(float learning_rate) {
 void CudaNeuralNetwork::train_step(const std::vector<float>& X, const std::vector<float>& Y, float learning_rate) {
     // Forward pass
     std::vector<float> predictions;
-    forward(X, predictions);
+    forward_internal(X, predictions);
     
     // Copy labels to device
     cudaMemcpy(d_Y, Y.data(), Y.size() * sizeof(float), cudaMemcpyHostToDevice);
@@ -228,7 +285,7 @@ void CudaNeuralNetwork::train(const std::vector<float>& X, const std::vector<flo
         // Calculate and print accuracy every 50 epochs
         if (epoch % 50 == 0) {
             std::vector<float> predictions;
-            forward(X, predictions);
+            forward_internal(X, predictions);
             float accuracy = calculate_accuracy(predictions, Y);
             
             std::cout << "Epoch " << epoch << ", Accuracy: " << accuracy << std::endl;

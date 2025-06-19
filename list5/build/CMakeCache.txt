@@ -22,19 +22,19 @@ CMAKE_AR:FILEPATH=/nix/store/hrdlcxlpqhzv2iydcs04n2kdfl1wfsz6-gcc-wrapper-12.4.0
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_BUILD_TYPE:STRING=Debug
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CUDA architectures
-CMAKE_CUDA_ARCHITECTURES:STRING=52
+CMAKE_CUDA_ARCHITECTURES:STRING=61
 
 //CUDA compiler
 CMAKE_CUDA_COMPILER:FILEPATH=/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/bin/nvcc
 
 //Flags used by the CUDA compiler during all build types.
-CMAKE_CUDA_FLAGS:STRING=
+CMAKE_CUDA_FLAGS:STRING=-arch=sm_61 --expt-relaxed-constexpr -g -G
 
 //Flags used by the CUDA compiler during DEBUG builds.
 CMAKE_CUDA_FLAGS_DEBUG:STRING=-g
@@ -208,7 +208,7 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // .SILENT directive, and all commands will be echoed to the console
 // during the make.  This is useful for debugging only. With Visual
 // Studio IDE projects all commands are done without /nologo.
-CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
+CMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 //Path to a file.
 CUDAToolkit_CUPTI_INCLUDE_DIR:PATH=/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include
@@ -221,6 +221,9 @@ CUDA_CUDART:FILEPATH=/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.
 
 //Path to a library.
 CUDA_OpenCL_LIBRARY:FILEPATH=CUDA_OpenCL_LIBRARY-NOTFOUND
+
+//No help, variable specified on the command line.
+CUDA_VERBOSE_BUILD:UNINITIALIZED=ON
 
 //Path to a library.
 CUDA_cuFile_LIBRARY:FILEPATH=CUDA_cuFile_LIBRARY-NOTFOUND

@@ -36,6 +36,17 @@ print("Loading MNIST data...")
 train_images = train_images.reshape(60000, 784).T.astype('float32') / 255
 
 def init_parameters():
+    # Xavier initialization
+    W1 = np.random.randn(128, 784) * np.sqrt(2.0 / 784)  # For ReLU
+    b1 = np.zeros((128, 1))
+    
+    W2 = np.random.randn(10, 128) * np.sqrt(1.0 / 128)   # For softmax
+    b2 = np.zeros((10, 1))
+    
+    return W1, b1, W2, b2
+
+"""
+def init_parameters():
     W1 = np.random.randn(128, 784)
     b1 = np.zeros((128, 1))
 
@@ -43,6 +54,7 @@ def init_parameters():
     b2 = np.zeros((10, 1))
 
     return W1, b1, W2, b2
+"""
 
 def ReLU(x):
     return np.maximum(0, x)

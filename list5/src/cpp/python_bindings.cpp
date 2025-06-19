@@ -14,8 +14,8 @@ PYBIND11_MODULE(cuda_neural_network, m) {
              py::arg("output_size"), py::arg("batch_size"),
              "Initialize CUDA Neural Network")
         .def("forward", &CudaNeuralNetwork::forward,
-             "Perform forward pass",
-             py::arg("X"), py::arg("predictions"))
+             "Perform forward pass and return predictions",
+             py::arg("X"))  // No longer need predictions parameter
         .def("train_step", &CudaNeuralNetwork::train_step,
              "Perform one training step",
              py::arg("X"), py::arg("Y"), py::arg("learning_rate"))

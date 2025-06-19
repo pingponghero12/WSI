@@ -1,0 +1,3 @@
+/home/pnrh1/Documents/WSI/sign_classifier/build/CMakeFiles/sign_classifier.dir
+/home/pnrh1/Documents/WSI/sign_classifier/build/CMakeFiles/edit_cache.dir
+/home/pnrh1/Documents/WSI/sign_classifier/build/CMakeFiles/rebuild_cache.dir

@@ -5,17 +5,12 @@ from sklearn.datasets import fetch_openml
 import sys
 import os
 
-# Add current directory to Python path for module import
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def load_mnist_sklearn():
-    """Load MNIST data using sklearn instead of TensorFlow"""
     print("Loading MNIST dataset from sklearn...")
-    
-    # Load MNIST data
     mnist = fetch_openml('mnist_784', version=1, as_frame=False, parser='auto')
     
-    # Split into train and test (sklearn MNIST comes as one dataset)
     train_images = mnist.data[:60000]
     train_labels = mnist.target[:60000].astype(int)
     test_images = mnist.data[60000:]
@@ -28,114 +23,86 @@ def load_mnist_sklearn():
     return (train_images, train_labels), (test_images, test_labels)
 
 def one_hot_encode(labels, num_classes=10):
-    """Convert labels to one-hot encoding in (num_classes, num_samples) format"""
     encoded = np.zeros((num_classes, len(labels)), dtype=np.float32)
     for i, label in enumerate(labels):
         encoded[int(label), i] = 1.0
     return encoded
 
 def main():
-    print("MNIST Neural Network Training with CUDA (Debug Version)")
-    print("=" * 60)
+    print("MNIST Neural Network Training with CUDA")
     
-    # Try to import CUDA module (should be in same directory)
     try:
         import cuda_neural_network as cnn
-        print("✅ CUDA Neural Network module imported successfully!")
+        print("CUDA module imported")
     except ImportError as e:
-        print(f"❌ Failed to import CUDA Neural Network: {e}")
+        print(f"Import failed: {e}")
         return
     
-    # Load data
+    # Load data exactly like the first script
     (train_images, train_labels), (test_images, test_labels) = load_mnist_sklearn()
     
-    # Use smaller subset for debugging
-    n_train_samples = 100  # Much smaller for debugging
-    train_images_subset = train_images[:n_train_samples]
-    train_labels_subset = train_labels[:n_train_samples]
+    # Use exact same data preparation as first script
+    train_images = train_images.reshape(60000, 784).T.astype('float32') / 255
+    n_train_samples = 2000
     
-    # Prepare data in the format expected by CUDA implementation
-    X = train_images_subset.T.astype('float32') / 255.0  # Shape: (784, 100)
-    Y = one_hot_encode(train_labels_subset, 10)          # Shape: (10, 100)
+    X = train_images[:, :n_train_samples]  # Shape: (784, 2000)
+    Y = one_hot_encode(train_labels[:n_train_samples], 10)  # Shape: (10, 2000)
     
-    print(f"Training input shape: {X.shape}")
-    print(f"Training labels shape: {Y.shape}")
+    print("Starting training...")
+    print("Training data shape:", X.shape)
     
-    # Initialize CUDA Neural Network
-    print("\nInitializing CUDA Neural Network...")
-    try:
-        net = cnn.CudaNeuralNetwork(
-            input_size=784,
-            hidden_size=128,
-            output_size=10,
-            batch_size=n_train_samples
-        )
-        print("✅ Neural network initialized successfully!")
-    except Exception as e:
-        print(f"❌ Failed to initialize neural network: {e}")
-        return
+    # Initialize network with same architecture as first script
+    net = cnn.CudaNeuralNetwork(784, 128, 10, n_train_samples)
     
-    # Test forward pass BEFORE training
-    print("\n=== Testing forward pass BEFORE training ===")
-    try:
-        predictions = []
-        print(f"Input data size: {len(X.flatten().tolist())}")
-        print("Calling forward...")
+    # Train with exact same parameters as first script
+    net.train(X.flatten().tolist(), Y.flatten().tolist(), 2000, 0.35)
+    
+    # Test on same data as training (like first script does during training)
+    predictions = net.forward(X.flatten().tolist())
+    predictions_array = np.array(predictions).reshape(10, n_train_samples)
+    pred_classes = np.argmax(predictions_array, axis=0)
+    final_accuracy = np.mean(pred_classes == train_labels[:n_train_samples])
+    
+    print(f"\nFinal training accuracy: {final_accuracy:.4f}")
+    
+    # FIXED: Test in batches using the SAME trained network
+    print("\nPreparing test data...")
+    test_images = test_images.reshape(10000, 784).T.astype('float32') / 255
+    
+    print("Running inference on test data...")
+    
+    # Test in smaller batches to use the same trained network
+    batch_size = 1000  # Use smaller batches
+    all_predictions = []
+    
+    for i in range(0, 10000, batch_size):
+        end_idx = min(i + batch_size, 10000)
+        batch_test_images = test_images[:, i:end_idx]
         
-        net.forward(X.flatten().tolist(), predictions)
-        
-        print(f"Predictions returned: {len(predictions)} elements")
-        if len(predictions) > 0:
-            print(f"First few predictions: {predictions[:10]}")
-            predictions_array = np.array(predictions).reshape(10, n_train_samples)
-            print(f"Reshaped predictions shape: {predictions_array.shape}")
+        # Pad to match training batch size if needed
+        current_batch_size = end_idx - i
+        if current_batch_size < n_train_samples:
+            # Pad with zeros to match expected input size
+            padding_needed = n_train_samples - current_batch_size
+            padding = np.zeros((784, padding_needed), dtype=np.float32)
+            batch_test_images_padded = np.concatenate([batch_test_images, padding], axis=1)
         else:
-            print("❌ No predictions returned!")
-            
-    except Exception as e:
-        print(f"❌ Forward pass failed: {e}")
-        return
-    
-    # Train for just a few epochs
-    print(f"\n=== Training for 10 epochs ===")
-    try:
-        net.train(
-            X.flatten().tolist(), 
-            Y.flatten().tolist(), 
-            epochs=10,  # Just 10 epochs for debugging
-            learning_rate=0.1
-        )
-        print("✅ Training completed!")
-    except Exception as e:
-        print(f"❌ Training failed: {e}")
-        return
-    
-    # Test forward pass AFTER training
-    print("\n=== Testing forward pass AFTER training ===")
-    try:
-        predictions = []
-        print("Calling forward after training...")
+            batch_test_images_padded = batch_test_images
         
-        net.forward(X.flatten().tolist(), predictions)
+        # Use the TRAINED network
+        batch_predictions = net.forward(batch_test_images_padded.flatten().tolist())
+        batch_predictions_array = np.array(batch_predictions).reshape(10, n_train_samples)
         
-        print(f"Predictions returned: {len(predictions)} elements")
-        if len(predictions) > 0:
-            print(f"First few predictions: {predictions[:10]}")
-            predictions_array = np.array(predictions).reshape(10, n_train_samples)
-            print(f"Reshaped predictions shape: {predictions_array.shape}")
-            
-            # Calculate accuracy
-            pred_classes = np.argmax(predictions_array, axis=0)
-            true_classes = train_labels_subset
-            accuracy = np.mean(pred_classes == true_classes)
-            
-            print(f"Training Accuracy: {accuracy:.4f}")
-            print("✅ Debug test completed successfully!")
-        else:
-            print("❌ Still no predictions returned after training!")
-            
-    except Exception as e:
-        print(f"❌ Post-training forward pass failed: {e}")
+        # Only take predictions for actual samples (not padding)
+        actual_predictions = batch_predictions_array[:, :current_batch_size]
+        all_predictions.append(actual_predictions)
+    
+    # Combine all predictions
+    all_predictions = np.concatenate(all_predictions, axis=1)
+    test_pred_classes = np.argmax(all_predictions, axis=0)
+    test_accuracy = np.mean(test_pred_classes == test_labels)
+    
+    print("Test Accuracy:", test_accuracy)
 
 if __name__ == "__main__":
     main()

@@ -7,11 +7,11 @@ CUDA_DEFINES = -Dcuda_neural_network_EXPORTS
 
 CUDA_INCLUDES = --options-file CMakeFiles/cuda_neural_network.dir/includes_CUDA.rsp
 
-CUDA_FLAGS = -O3 -DNDEBUG -std=c++17 "--generate-code=arch=compute_61,code=[compute_61,sm_61]" -Xcompiler=-fPIC -Xcompiler=-fvisibility=hidden -arch=sm_61 --expt-relaxed-constexpr
+CUDA_FLAGS = -arch=sm_61 --expt-relaxed-constexpr -g -G -g -std=c++17 "--generate-code=arch=compute_61,code=[compute_61,sm_61]" -Xcompiler=-fPIC -Xcompiler=-fvisibility=hidden -arch=sm_61 --expt-relaxed-constexpr
 
 CXX_DEFINES = -Dcuda_neural_network_EXPORTS
 
 CXX_INCLUDES = -I/home/pnrh1/Documents/WSI/list5/src/include -isystem /nix/store/c9m6yd8fg1flz2j5r4bif1ib5j20a0cy-python3-3.12.8/include/python3.12 -isystem /nix/store/clrlqkcvr4h67fbnv00pf29v02k4lhyr-python3.12-pybind11-2.13.6/include -isystem /nix/store/vnwm837kbwv0ckf1xbjs6zx9vddcjz8d-cuda_nvcc-12.4.99/include
 
-CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17 -fPIC -fvisibility=hidden -flto -fno-fat-lto-objects
+CXX_FLAGS = -g -std=gnu++17 -fPIC -fvisibility=hidden
 

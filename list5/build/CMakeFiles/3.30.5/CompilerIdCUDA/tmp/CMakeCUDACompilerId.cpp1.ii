@@ -1,4 +1,5 @@
 # 0 "CMakeCUDACompilerId.cu"
+# 1 "/home/pnrh1/Documents/WSI/list5/build/CMakeFiles/3.30.5/CompilerIdCUDA//"
 # 0 "<built-in>"
 # 0 "<command-line>"
 # 1 "/nix/store/kj8hbqx4ds9qm9mq7hyikxyfwwg13kzj-glibc-2.40-36-dev/include/stdc-predef.h" 1 3 4
@@ -31816,6 +31817,230 @@ static __inline__ __attribute__((device)) unsigned long long atomicXor(unsigned 
 # 57 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_35_atomic_functions.h" 2 3 4
 # 3625 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/crt/device_functions.h" 2 3 4
 # 1 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_60_atomic_functions.h" 1 3 4
+# 93 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_60_atomic_functions.h" 3 4
+static __inline__ __attribute__((device)) double atomicAdd(double *address, double val) ;
+
+static __inline__ __attribute__((device))
+int atomicAdd_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicAdd_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicAdd_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicAdd_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAdd_block(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAdd_system(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+float atomicAdd_block(float *address, float val) ;
+
+static __inline__ __attribute__((device))
+float atomicAdd_system(float *address, float val) ;
+
+static __inline__ __attribute__((device))
+double atomicAdd_block(double *address, double val) ;
+
+static __inline__ __attribute__((device))
+double atomicAdd_system(double *address, double val) ;
+
+static __inline__ __attribute__((device))
+int atomicSub_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicSub_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicSub_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicSub_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+int atomicExch_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicExch_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicExch_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicExch_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicExch_block(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicExch_system(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+float atomicExch_block(float *address, float val) ;
+
+static __inline__ __attribute__((device))
+float atomicExch_system(float *address, float val) ;
+
+static __inline__ __attribute__((device))
+int atomicMin_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicMin_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+long long atomicMin_block(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+long long atomicMin_system(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicMin_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicMin_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMin_block(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMin_system(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+int atomicMax_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicMax_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+long long atomicMax_block(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+long long atomicMax_system(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicMax_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicMax_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMax_block(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMax_system(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicInc_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicInc_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicDec_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicDec_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+int atomicCAS_block(int *address, int compare, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicCAS_system(int *address, int compare, int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicCAS_block(unsigned int *address, unsigned int compare,
+                             unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicCAS_system(unsigned int *address, unsigned int compare,
+                              unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long int atomicCAS_block(unsigned long long int *address,
+                                       unsigned long long int compare,
+                                       unsigned long long int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long int atomicCAS_system(unsigned long long int *address,
+                                        unsigned long long int compare,
+                                        unsigned long long int val) ;
+
+static __inline__ __attribute__((device))
+int atomicAnd_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicAnd_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+long long atomicAnd_block(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+long long atomicAnd_system(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicAnd_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicAnd_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAnd_block(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAnd_system(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+int atomicOr_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicOr_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+long long atomicOr_block(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+long long atomicOr_system(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicOr_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicOr_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicOr_block(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicOr_system(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+int atomicXor_block(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+int atomicXor_system(int *address, int val) ;
+
+static __inline__ __attribute__((device))
+long long atomicXor_block(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+long long atomicXor_system(long long *address, long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicXor_block(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned int atomicXor_system(unsigned int *address, unsigned int val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicXor_block(unsigned long long *address, unsigned long long val) ;
+
+static __inline__ __attribute__((device))
+unsigned long long atomicXor_system(unsigned long long *address, unsigned long long val) ;
 # 325 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_60_atomic_functions.h" 3 4
 # 1 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_60_atomic_functions.hpp" 1 3 4
 # 61 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_60_atomic_functions.hpp" 3 4
@@ -32032,6 +32257,449 @@ unsigned long long __ullAtomicXor_block(unsigned long long *address, unsigned lo
 
 extern __attribute__((device)) __attribute__((device_builtin))
 unsigned long long __ullAtomicXor_system(unsigned long long *address, unsigned long long val);
+}
+# 292 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_60_atomic_functions.hpp" 3 4
+static __inline__ __attribute__((device)) double atomicAdd(double *address, double val)
+{
+  return __dAtomicAdd(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicAdd_block(int *address, int val)
+{
+  return __iAtomicAdd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicAdd_system(int *address, int val)
+{
+  return __iAtomicAdd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicAdd_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAdd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicAdd_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAdd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAdd_block(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicAdd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAdd_system(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicAdd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+float atomicAdd_block(float *address, float val)
+{
+  return __fAtomicAdd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+float atomicAdd_system(float *address, float val)
+{
+  return __fAtomicAdd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+double atomicAdd_block(double *address, double val)
+{
+  return __dAtomicAdd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+double atomicAdd_system(double *address, double val)
+{
+  return __dAtomicAdd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicSub_block(int *address, int val)
+{
+  return __iAtomicAdd_block(address, (unsigned int)-(int)val);
+}
+
+static __inline__ __attribute__((device))
+int atomicSub_system(int *address, int val)
+{
+  return __iAtomicAdd_system(address, (unsigned int)-(int)val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicSub_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAdd_block(address, (unsigned int)-(int)val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicSub_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAdd_system(address, (unsigned int)-(int)val);
+}
+
+static __inline__ __attribute__((device))
+int atomicExch_block(int *address, int val)
+{
+  return __iAtomicExch_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicExch_system(int *address, int val)
+{
+  return __iAtomicExch_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicExch_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicExch_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicExch_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicExch_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicExch_block(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicExch_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicExch_system(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicExch_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+float atomicExch_block(float *address, float val)
+{
+  return __fAtomicExch_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+float atomicExch_system(float *address, float val)
+{
+  return __fAtomicExch_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicMin_block(int *address, int val)
+{
+  return __iAtomicMin_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicMin_system(int *address, int val)
+{
+  return __iAtomicMin_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicMin_block(long long *address, long long val)
+{
+  return __illAtomicMin_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicMin_system(long long *address, long long val)
+{
+  return __illAtomicMin_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicMin_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicMin_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicMin_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicMin_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMin_block(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicMin_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMin_system(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicMin_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicMax_block(int *address, int val)
+{
+  return __iAtomicMax_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicMax_system(int *address, int val)
+{
+  return __iAtomicMax_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicMax_block(long long *address, long long val)
+{
+  return __illAtomicMax_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicMax_system(long long *address, long long val)
+{
+  return __illAtomicMax_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicMax_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicMax_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicMax_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicMax_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMax_block(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicMax_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicMax_system(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicMax_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicInc_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicInc_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicInc_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicInc_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicDec_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicDec_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicDec_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicDec_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicCAS_block(int *address, int compare, int val)
+{
+  return __iAtomicCAS_block(address, compare, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicCAS_system(int *address, int compare, int val)
+{
+  return __iAtomicCAS_system(address, compare, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicCAS_block(unsigned int *address, unsigned int compare,
+                             unsigned int val)
+{
+  return __uAtomicCAS_block(address, compare, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicCAS_system(unsigned int *address, unsigned int compare,
+                              unsigned int val)
+{
+  return __uAtomicCAS_system(address, compare, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long int atomicCAS_block(unsigned long long int *address,
+                                       unsigned long long int compare,
+                                       unsigned long long int val)
+{
+  return __ullAtomicCAS_block(address, compare, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long int atomicCAS_system(unsigned long long int *address,
+                                        unsigned long long int compare,
+                                        unsigned long long int val)
+{
+  return __ullAtomicCAS_system(address, compare, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicAnd_block(int *address, int val)
+{
+  return __iAtomicAnd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicAnd_system(int *address, int val)
+{
+  return __iAtomicAnd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicAnd_block(long long *address, long long val)
+{
+  return __llAtomicAnd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicAnd_system(long long *address, long long val)
+{
+  return __llAtomicAnd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicAnd_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAnd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicAnd_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAnd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAnd_block(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicAnd_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicAnd_system(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicAnd_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicOr_block(int *address, int val)
+{
+  return __iAtomicOr_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicOr_system(int *address, int val)
+{
+  return __iAtomicOr_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicOr_block(long long *address, long long val)
+{
+  return __llAtomicOr_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicOr_system(long long *address, long long val)
+{
+  return __llAtomicOr_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicOr_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicOr_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicOr_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicOr_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicOr_block(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicOr_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicOr_system(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicOr_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicXor_block(int *address, int val)
+{
+  return __iAtomicXor_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+int atomicXor_system(int *address, int val)
+{
+  return __iAtomicXor_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicXor_block(long long *address, long long val)
+{
+  return __llAtomicXor_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+long long atomicXor_system(long long *address, long long val)
+{
+  return __llAtomicXor_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicXor_block(unsigned int *address, unsigned int val)
+{
+  return __uAtomicXor_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned int atomicXor_system(unsigned int *address, unsigned int val)
+{
+  return __uAtomicXor_system(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicXor_block(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicXor_block(address, val);
+}
+
+static __inline__ __attribute__((device))
+unsigned long long atomicXor_system(unsigned long long *address, unsigned long long val)
+{
+  return __ullAtomicXor_system(address, val);
 }
 # 326 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_60_atomic_functions.h" 2 3 4
 # 3626 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/crt/device_functions.h" 2 3 4
@@ -33763,8 +34431,106 @@ static __attribute__((device)) __inline__ unsigned int __funnelshift_rc(unsigned
 # 1 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_35_intrinsics.h" 1 3 4
 # 3630 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/crt/device_functions.h" 2 3 4
 # 1 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 1 3 4
+# 102 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ int __dp2a_lo(int srcA, int srcB, int c) ;
+# 113 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ unsigned int __dp2a_lo(unsigned int srcA, unsigned int srcB, unsigned int c) ;
+# 125 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ int __dp2a_lo(short2 srcA, char4 srcB, int c) ;
+# 136 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ unsigned int __dp2a_lo(ushort2 srcA, uchar4 srcB, unsigned int c) ;
+# 148 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ int __dp2a_hi(int srcA, int srcB, int c) ;
+# 159 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ unsigned int __dp2a_hi(unsigned int srcA, unsigned int srcB, unsigned int c) ;
+# 171 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ int __dp2a_hi(short2 srcA, char4 srcB, int c) ;
+# 182 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ unsigned int __dp2a_hi(ushort2 srcA, uchar4 srcB, unsigned int c) ;
+# 197 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ int __dp4a(int srcA, int srcB, int c) ;
+# 206 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ unsigned int __dp4a(unsigned int srcA, unsigned int srcB, unsigned int c) ;
+# 216 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ int __dp4a(char4 srcA, char4 srcB, int c) ;
+# 225 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
+static __attribute__((device)) __inline__ unsigned int __dp4a(uchar4 srcA, uchar4 srcB, unsigned int c) ;
 # 235 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 3 4
 # 1 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.hpp" 1 3 4
+# 79 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.hpp" 3 4
+static __attribute__((device)) __inline__ int __dp4a(int srcA, int srcB, int c) {
+    int ret;
+    asm volatile ("dp4a.s32.s32 %0, %1, %2, %3;" : "=r"(ret) : "r"(srcA), "r"(srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ unsigned int __dp4a(unsigned int srcA, unsigned int srcB, unsigned int c) {
+    unsigned int ret;
+    asm volatile ("dp4a.u32.u32 %0, %1, %2, %3;" : "=r"(ret) : "r"(srcA), "r"(srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ int __dp4a(char4 srcA, char4 srcB, int c) {
+    int ret;
+    asm volatile ("dp4a.s32.s32 %0, %1, %2, %3;" : "=r"(ret) : "r"(*(int *)&srcA), "r"(*(int *)&srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ unsigned int __dp4a(uchar4 srcA, uchar4 srcB, unsigned int c) {
+    unsigned int ret;
+    asm volatile ("dp4a.u32.u32 %0, %1, %2, %3;" : "=r"(ret) : "r"(*(unsigned int *)&srcA), "r"(*(unsigned int *)&srcB), "r"(c));
+    return ret;
+}
+
+
+static __attribute__((device)) __inline__ int __dp2a_lo(int srcA, int srcB, int c) {
+    int ret;
+    asm volatile ("dp2a.lo.s32.s32 %0, %1, %2, %3;" : "=r"(ret) : "r"(srcA), "r"(srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ unsigned int __dp2a_lo(unsigned int srcA, unsigned int srcB, unsigned int c) {
+    unsigned int ret;
+    asm volatile ("dp2a.lo.u32.u32 %0, %1, %2, %3;" : "=r"(ret) : "r"(srcA), "r"(srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ int __dp2a_lo(short2 srcA, char4 srcB, int c) {
+    int ret;
+    asm volatile ("dp2a.lo.s32.s32 %0, %1, %2, %3;" : "=r"(ret) : "r"(*(int *)&srcA), "r"(*(int *)&srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ unsigned int __dp2a_lo(ushort2 srcA, uchar4 srcB, unsigned int c) {
+    unsigned int ret;
+    asm volatile ("dp2a.lo.u32.u32 %0, %1, %2, %3;" : "=r"(ret) : "r"(*(unsigned int *)&srcA), "r"(*(unsigned int *)&srcB), "r"(c));
+    return ret;
+}
+
+
+static __attribute__((device)) __inline__ int __dp2a_hi(int srcA, int srcB, int c) {
+    int ret;
+    asm volatile ("dp2a.hi.s32.s32 %0, %1, %2, %3;" : "=r"(ret) : "r"(srcA), "r"(srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ unsigned int __dp2a_hi(unsigned int srcA, unsigned int srcB, unsigned int c) {
+    unsigned int ret;
+    asm volatile ("dp2a.hi.u32.u32 %0, %1, %2, %3;" : "=r"(ret) : "r"(srcA), "r"(srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ int __dp2a_hi(short2 srcA, char4 srcB, int c) {
+    int ret;
+    asm volatile ("dp2a.hi.s32.s32 %0, %1, %2, %3;" : "=r"(ret) : "r"(*(int *)&srcA), "r"(*(int *)&srcB), "r"(c));
+    return ret;
+}
+
+static __attribute__((device)) __inline__ unsigned int __dp2a_hi(ushort2 srcA, uchar4 srcB, unsigned int c) {
+    unsigned int ret;
+    asm volatile ("dp2a.hi.u32.u32 %0, %1, %2, %3;" : "=r"(ret) : "r"(*(unsigned int *)&srcA), "r"(*(unsigned int *)&srcB), "r"(c));
+    return ret;
+}
 # 236 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/sm_61_intrinsics.h" 2 3 4
 # 3631 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/crt/device_functions.h" 2 3 4
 # 1 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/crt/sm_70_rt.h" 1 3 4
@@ -33862,7 +34628,28 @@ static __attribute__((device)) T tex2D(cudaTextureObject_t texObject, float x, f
   tex2D(&ret, texObject, x, y);
   return ret;
 }
-# 173 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex2D(T *ptr, cudaTextureObject_t obj, float x, float y,
+                                                          bool* isResident)
+{
+  unsigned char res;
+   __nv_tex_surf_handler("__itex2D_sparse", ptr, obj, x, y, &res);
+   *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex2D(cudaTextureObject_t texObject, float x, float y, bool* isResident)
+{
+  T ret;
+  tex2D(&ret, texObject, x, y, isResident);
+  return ret;
+}
+
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type tex3D(T *ptr, cudaTextureObject_t obj, float x, float y, float z)
 {
@@ -33876,7 +34663,27 @@ static __attribute__((device)) T tex3D(cudaTextureObject_t texObject, float x, f
   tex3D(&ret, texObject, x, y, z);
   return ret;
 }
-# 207 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex3D(T *ptr, cudaTextureObject_t obj, float x, float y, float z,
+                                                          bool* isResident)
+{
+  unsigned char res;
+   __nv_tex_surf_handler("__itex3D_sparse", ptr, obj, x, y, z, &res);
+   *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex3D(cudaTextureObject_t texObject, float x, float y, float z, bool* isResident)
+{
+  T ret;
+  tex3D(&ret, texObject, x, y, z, isResident);
+  return ret;
+}
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type tex1DLayered(T *ptr, cudaTextureObject_t obj, float x, int layer)
 {
@@ -33904,7 +34711,26 @@ static __attribute__((device)) T tex2DLayered(cudaTextureObject_t texObject, flo
   tex2DLayered(&ret, texObject, x, y, layer);
   return ret;
 }
-# 254 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex2DLayered(T *ptr, cudaTextureObject_t obj, float x, float y, int layer, bool* isResident)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex2DLayered_sparse", ptr, obj, x, y, layer, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex2DLayered(cudaTextureObject_t texObject, float x, float y, int layer, bool* isResident)
+{
+  T ret;
+  tex2DLayered(&ret, texObject, x, y, layer, isResident);
+  return ret;
+}
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type texCubemap(T *ptr, cudaTextureObject_t obj, float x, float y, float z)
 {
@@ -33948,7 +34774,26 @@ static __attribute__((device)) T tex2Dgather(cudaTextureObject_t to, float x, fl
   tex2Dgather(&ret, to, x, y, comp);
   return ret;
 }
-# 317 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex2Dgather(T *ptr, cudaTextureObject_t obj, float x, float y, bool* isResident, int comp = 0)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex2Dgather_sparse", ptr, obj, x, y, comp, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex2Dgather(cudaTextureObject_t to, float x, float y, bool* isResident, int comp = 0)
+{
+  T ret;
+  tex2Dgather(&ret, to, x, y, isResident, comp);
+  return ret;
+}
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type tex1DLod(T *ptr, cudaTextureObject_t obj, float x, float level)
 {
@@ -33977,7 +34822,28 @@ static __attribute__((device)) T tex2DLod(cudaTextureObject_t texObject, float x
   tex2DLod(&ret, texObject, x, y, level);
   return ret;
 }
-# 367 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex2DLod(T *ptr, cudaTextureObject_t obj, float x, float y, float level, bool* isResident)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex2DLod_sparse", ptr, obj, x, y, level, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex2DLod(cudaTextureObject_t texObject, float x, float y, float level, bool* isResident)
+{
+  T ret;
+  tex2DLod(&ret, texObject, x, y, level, isResident);
+  return ret;
+}
+
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type tex3DLod(T *ptr, cudaTextureObject_t obj, float x, float y, float z, float level)
 {
@@ -33991,7 +34857,27 @@ static __attribute__((device)) T tex3DLod(cudaTextureObject_t texObject, float x
   tex3DLod(&ret, texObject, x, y, z, level);
   return ret;
 }
-# 401 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex3DLod(T *ptr, cudaTextureObject_t obj, float x, float y, float z, float level, bool* isResident)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex3DLod_sparse", ptr, obj, x, y, z, level, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex3DLod(cudaTextureObject_t texObject, float x, float y, float z, float level, bool* isResident)
+{
+  T ret;
+  tex3DLod(&ret, texObject, x, y, z, level, isResident);
+  return ret;
+}
+
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type tex1DLayeredLod(T *ptr, cudaTextureObject_t obj, float x, int layer, float level)
 {
@@ -34020,7 +34906,25 @@ static __attribute__((device)) T tex2DLayeredLod(cudaTextureObject_t texObject, 
   tex2DLayeredLod(&ret, texObject, x, y, layer, level);
   return ret;
 }
-# 448 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex2DLayeredLod(T *ptr, cudaTextureObject_t obj, float x, float y, int layer, float level, bool* isResident)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex2DLayeredLod_sparse", ptr, obj, x, y, layer, level, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex2DLayeredLod(cudaTextureObject_t texObject, float x, float y, int layer, float level, bool* isResident)
+{
+  T ret;
+  tex2DLayeredLod(&ret, texObject, x, y, layer, level, isResident);
+  return ret;
+}
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type texCubemapLod(T *ptr, cudaTextureObject_t obj, float x, float y, float z, float level)
 {
@@ -34092,7 +34996,26 @@ static __attribute__((device)) T tex2DGrad(cudaTextureObject_t texObject, float 
   tex2DGrad(&ret, texObject, x, y, dPdx, dPdy);
   return ret;
 }
-# 539 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex2DGrad(T *ptr, cudaTextureObject_t obj, float x, float y, float2 dPdx, float2 dPdy, bool* isResident)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex2DGrad_sparse", ptr, obj, x, y, &dPdx, &dPdy, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex2DGrad(cudaTextureObject_t texObject, float x, float y, float2 dPdx, float2 dPdy, bool* isResident)
+{
+  T ret;
+  tex2DGrad(&ret, texObject, x, y, dPdx, dPdy, isResident);
+  return ret;
+}
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type tex3DGrad(T *ptr, cudaTextureObject_t obj, float x, float y, float z, float4 dPdx, float4 dPdy)
 {
@@ -34106,7 +35029,27 @@ static __attribute__((device)) T tex3DGrad(cudaTextureObject_t texObject, float 
   tex3DGrad(&ret, texObject, x, y, z, dPdx, dPdy);
   return ret;
 }
-# 573 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex3DGrad(T *ptr, cudaTextureObject_t obj, float x, float y, float z, float4 dPdx, float4 dPdy, bool* isResident)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex3DGrad_sparse", ptr, obj, x, y, z, &dPdx, &dPdy, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex3DGrad(cudaTextureObject_t texObject, float x, float y, float z, float4 dPdx, float4 dPdy, bool* isResident)
+{
+  T ret;
+  tex3DGrad(&ret, texObject, x, y, z, dPdx, dPdy, isResident);
+  return ret;
+}
+
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type tex1DLayeredGrad(T *ptr, cudaTextureObject_t obj, float x, int layer, float dPdx, float dPdy)
 {
@@ -34135,7 +35078,26 @@ static __attribute__((device)) T tex2DLayeredGrad(cudaTextureObject_t texObject,
   tex2DLayeredGrad(&ret, texObject, x, y, layer, dPdx, dPdy);
   return ret;
 }
-# 621 "/nix/store/sxcbv7hiy9h8d2xr64ixbryi5qa7ngsb-cuda-merged-12.4/include/texture_indirect_functions.h" 3 4
+
+
+template <typename T>
+static __attribute__((device)) typename __nv_itex_trait<T>::type tex2DLayeredGrad(T * ptr, cudaTextureObject_t obj, float x, float y, int layer, float2 dPdx, float2 dPdy, bool* isResident)
+{
+  unsigned char res;
+  __nv_tex_surf_handler("__itex2DLayeredGrad_sparse", ptr, obj, x, y, layer, &dPdx, &dPdy, &res);
+  *isResident = (res != 0);
+}
+
+template <class T>
+static __attribute__((device)) T tex2DLayeredGrad(cudaTextureObject_t texObject, float x, float y, int layer, float2 dPdx, float2 dPdy, bool* isResident)
+{
+  T ret;
+  tex2DLayeredGrad(&ret, texObject, x, y, layer, dPdx, dPdy, isResident);
+  return ret;
+}
+
+
+
 template <typename T>
 static __attribute__((device)) typename __nv_itex_trait<T>::type texCubemapLayeredGrad(T *ptr, cudaTextureObject_t obj, float x, float y, float z, int layer, float4 dPdx, float4 dPdy)
 {
