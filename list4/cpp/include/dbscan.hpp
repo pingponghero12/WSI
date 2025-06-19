@@ -22,7 +22,7 @@ public:
     
     // Main method to fit the model and return cluster labels
     std::vector<int> fit_predict(const std::vector<std::vector<double>>& X);
-    
+
     // Getters
     std::vector<int> get_labels() const { return labels; }
     int get_n_clusters() const { return n_clusters; }
