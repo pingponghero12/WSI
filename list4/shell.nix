@@ -19,6 +19,7 @@ pkgs.mkShell {
         scikit-learn
         seaborn
         pybind11
+        umap-learn
       ]
     ))
   ];
